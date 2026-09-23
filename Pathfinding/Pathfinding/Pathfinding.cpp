@@ -1,11 +1,13 @@
 // Pathfinding.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+#include "Node.h"
+#include "AStar.h"
 #include <iostream>
 #include <limits>
 #include <vector>
 
 #define inf std::numeric_limits<int>::max()
+
 
 struct Result
 {
@@ -78,21 +80,29 @@ Result DikjstraOneToAll(char origin, std::vector<std::vector<int>> matrix)
 
 }
 
+
+
+
 int main()
 {
-    std::vector<std::vector<int>> graph {
+    /*std::vector<std::vector<int>> graph{
     {0, 10, 15, inf, 30, inf, inf},
     {inf, 0, inf, inf, inf, 57, inf},
     {15, inf, 0, 16, inf, inf, 52},
     {inf, inf, 13, 0, inf, inf, inf},
     {30, inf, inf, inf, 0, 11, 34},
     {inf, 49, inf, inf, 12, 0, inf},
-    {inf, inf, 63, inf, 35, inf, 0 } };
+    {inf, inf, 63, inf, 35, inf, 0 } };*/
 
-    Result result = DikjstraOneToAll('a', graph);
-    std::cout << "Hello World!\n";
+    //Result result = DikjstraOneToAll('a', graph);
+    
+    AStar algo(7, 7, 10);
+
+    std::vector<Node*> path = algo.Execute({10, 10}, {50, 50});
+    AStar::Print(path);
+
+    return 0;
 }
-
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 

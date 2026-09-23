@@ -11,5 +11,6 @@ struct Node
     ~Node();
 
     int GetDistance(Node* from);
+    int GetNeighbourDistance(Node* from);
 };
 

@@ -14,5 +14,14 @@ Node::~Node()
 
 int Node::GetDistance(Node* from)
 {
-	return from->position.x - position.x + from->position.y - position.y;
+	return std::abs(from->position.x - position.x) + std::abs(from->position.y - position.y);
+}
+
+int Node::GetNeighbourDistance(Node* from)
+{
+	if (position.x == from->position.x || position.y == from->position.y)
+	{
+		return 10;
+	}
+	return 14;
 }

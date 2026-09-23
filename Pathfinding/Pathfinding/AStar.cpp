@@ -43,11 +43,18 @@ std::vector<Node*> AStar::Execute(Vector2 const& origin, Vector2 const& goal)
 			if (it != m_closedNodes.end())
 				continue;
 
-			pChild->g = pCurrentNode->g + pCurrentNode->GetDistance(pChild);
-			pChild->h = pEndNode->GetDistance(pChild);
-			pChild->f = pChild->g + pChild->h;
+			int h = pEndNode->GetDistance(pChild);
+			int g = pCurrentNode->g + pCurrentNode->GetDistance(pChild);
+			int f = g + h;
 
-		
+			if (pChild->pParent != nullptr && pChild->f < f)
+				continue;
+			
+			pChild->h = h;
+			pChild->g = g;
+			pChild->f = f;
+			pChild->pParent = pCurrentNode;
+
 			auto childIt = std::find_if(m_openNodes.begin(), m_openNodes.end(), [pChild](Node* pNode) {return pNode->position == pChild->position; });
 			if (childIt != m_openNodes.end())
 			{
@@ -84,7 +91,7 @@ Node* AStar::GetMinNode(std::vector<Node*> nodeList)
 			pResultNode = pNode;
 		}
 
-		else if (pNode->f == minFValue && pNode->h < minHValue)
+		if (pNode->f == minFValue && pNode->h < minHValue)
 		{
 			minFValue = pNode->f;
 			minHValue = pNode->h;
@@ -111,14 +118,16 @@ std::vector<Node*> AStar::InitChildren(Node* pCurrentNode)
 			if (widthPos < 0 || widthPos >= m_width || heightPos < 0 || heightPos >= m_height)
 				continue;
 
-			if (m_nodeGrid[widthPos][heightPos]->pParent != nullptr || i == 0 && j == 0)
+			if (m_nodeGrid[widthPos][heightPos] == nullptr)
+				continue;
+
+			if (i == 0 && j == 0)
 				continue;
 				
 			auto it = std::find(m_closedNodes.begin(), m_closedNodes.end(), m_nodeGrid[widthPos][heightPos]);
 			if (it != m_closedNodes.end())
 				continue;
 
-			m_nodeGrid[widthPos][heightPos]->pParent = pCurrentNode;
 			children.push_back(m_nodeGrid[widthPos][heightPos]);
 		}
 	}
@@ -150,4 +159,12 @@ void AStar::GenerateNodeGrid(int width, int height, int step)
 			m_nodeGrid[i][j] = new Node({ i * step, j * step });
 		}
 	}
+
+	m_nodeGrid[3][5] = nullptr;
+	m_nodeGrid[3][4] = nullptr;
+	m_nodeGrid[4][4] = nullptr;
+	m_nodeGrid[5][4] = nullptr;
+	m_nodeGrid[6][4] = nullptr;
+
+
 }

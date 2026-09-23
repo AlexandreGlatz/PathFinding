@@ -2,6 +2,12 @@
 
 #include <vector>
 
+enum class HEURISTIC
+{
+	EUCLIDIAN,
+	MANHATTAN
+};
+
 struct Vector2;
 struct Node;
 class AStar

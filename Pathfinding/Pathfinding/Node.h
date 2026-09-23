@@ -2,6 +2,12 @@
 
 #include "Vector2.h"
 
+enum class HEURISTIC
+{
+	EUCLIDIAN,
+	MANHATTAN
+};
+
 struct Node
 {
     Vector2 position;
@@ -10,7 +16,6 @@ struct Node
     Node(Vector2 _position = Vector2());
     ~Node();
 
-    int GetDistance(Node* from);
-    int GetNeighbourDistance(Node* from);
+    int GetDistance(Node* from, HEURISTIC heuristic);
 };
 

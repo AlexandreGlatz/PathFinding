@@ -12,16 +12,14 @@ Node::~Node()
 	pParent = nullptr;
 }
 
-int Node::GetDistance(Node* from)
+int Node::GetDistance(Node* from, HEURISTIC heuristic)
 {
-	return std::abs(from->position.x - position.x) + std::abs(from->position.y - position.y);
-}
-
-int Node::GetNeighbourDistance(Node* from)
-{
-	if (position.x == from->position.x || position.y == from->position.y)
+	switch(heuristic)
 	{
-		return 10;
+	case HEURISTIC::MANHATTAN:
+		return std::abs(from->position.x - position.x) + std::abs(from->position.y - position.y);
+	case HEURISTIC::EUCLIDIAN:
+		Vector2 diff = from->position - position;
+		return diff.MagnitudeSquared();
 	}
-	return 14;
 }

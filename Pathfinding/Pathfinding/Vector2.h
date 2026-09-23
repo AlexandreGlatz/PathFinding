@@ -7,7 +7,7 @@ struct Vector2
 	Vector2(int _x = 0, int _y = 0) :x(_x), y(_y) {}
 	bool operator==(const Vector2& goal) const;
 	Vector2 operator-(const Vector2& vector2) const;
-	int MagnitudeSquared();  //using - operator
+	int MagnitudeSquared();  
 	std::string ToString();
 };
 

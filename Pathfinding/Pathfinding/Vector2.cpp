@@ -14,7 +14,7 @@ Vector2 Vector2::operator-(const Vector2& vector2) const
 
 int Vector2::MagnitudeSquared()
 {
-	return pow(x,2) + pow(y,2);
+	return std::sqrt(pow(x,2) + pow(y,2));
 }
 
 std::string Vector2::ToString()

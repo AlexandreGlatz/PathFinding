@@ -96,7 +96,7 @@ int main()
 
     //Result result = DikjstraOneToAll('a', graph);
     
-    AStar algo(7, 7, 10);
+    AStar algo(7, 7, 10, HEURISTIC::EUCLIDIAN);
 
     std::vector<Node*> path = algo.Execute({10, 10}, {50, 50});
     AStar::Print(path);

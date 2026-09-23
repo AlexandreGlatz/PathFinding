@@ -5,7 +5,7 @@
 
 #define inf std::numeric_limits<int>::max()
 
-AStar::AStar(int gridWidth, int gridHeight, int step) : m_step(step), m_width(gridWidth), m_height(gridHeight)
+AStar::AStar(int gridWidth, int gridHeight, int step, HEURISTIC heuristic) : m_step(step), m_width(gridWidth), m_height(gridHeight), m_heuristic(heuristic)
 {
 	GenerateNodeGrid(gridWidth, gridHeight, step);
 }
@@ -43,8 +43,8 @@ std::vector<Node*> AStar::Execute(Vector2 const& origin, Vector2 const& goal)
 			if (it != m_closedNodes.end())
 				continue;
 
-			int h = pEndNode->GetDistance(pChild);
-			int g = pCurrentNode->g + pCurrentNode->GetDistance(pChild);
+			int h = pEndNode->GetDistance(pChild, m_heuristic);
+			int g = pCurrentNode->g + pCurrentNode->GetDistance(pChild, m_heuristic);
 			int f = g + h;
 
 			if (pChild->pParent != nullptr && pChild->f < f)

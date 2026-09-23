@@ -2,6 +2,7 @@
 #include "Node.h"
 
 #include <iostream>
+#include <raylib.h>
 
 #define inf std::numeric_limits<int>::max()
 
@@ -14,7 +15,7 @@ AStar::~AStar()
 {
 }
 
-std::vector<Node*> AStar::Execute(Vector2 const& origin, Vector2 const& goal)
+std::vector<Node*> AStar::Execute(Vec2 const& origin, Vec2 const& goal)
 {
 	Node* pStartNode = m_nodeGrid[origin.x / m_step][origin.y / m_step];
 	Node* pEndNode = m_nodeGrid[goal.x / m_step][goal.y / m_step];
@@ -73,6 +74,31 @@ void AStar::Print(std::vector<Node*> pPath)
 	for (Node* pNode : pPath)
 	{
 		std::cout << pNode->position.ToString() << std::endl;
+	}
+}
+
+void AStar::DisplayGrid()
+{
+	for (int i = 0; i<m_width; ++i)
+	{
+		for (int j = 0; j<m_height; ++j)
+		{
+			Color color = WHITE;
+			if (m_nodeGrid[i][j] == nullptr)
+			{
+				color = BLACK;
+			}
+			DrawRectangle(i * m_step, j * m_step, m_step, m_step, color);
+			DrawRectangleLines(i * m_step, j * m_step, m_step, m_step, BLACK);
+		}
+	}
+}
+
+void AStar::DisplayPath(std::vector<Node*> path)
+{
+	for (Node const* pNode : path)
+	{
+		DrawRectangle(pNode->position.x, pNode->position.y, m_step, m_step, GREEN);
 	}
 }
 

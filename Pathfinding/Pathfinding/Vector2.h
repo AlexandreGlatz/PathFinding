@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 
-struct Vector2
+struct Vec2
 {
 	int x, y;
-	Vector2(int _x = 0, int _y = 0) :x(_x), y(_y) {}
-	bool operator==(const Vector2& goal) const;
-	Vector2 operator-(const Vector2& vector2) const;
+	Vec2(int _x = 0, int _y = 0) :x(_x), y(_y) {}
+	bool operator==(const Vec2& goal) const;
+	Vec2 operator-(const Vec2& vector2) const;
 	int MagnitudeSquared();  
 	std::string ToString();
 };

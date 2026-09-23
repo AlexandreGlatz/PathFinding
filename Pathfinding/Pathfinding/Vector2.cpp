@@ -2,22 +2,22 @@
 
 #include <cmath>
 
-bool Vector2::operator==(const Vector2& goal) const
+bool Vec2::operator==(const Vec2& goal) const
 {
 	return x == goal.x && y == goal.y;
 }
 
-Vector2 Vector2::operator-(const Vector2& vector2) const
+Vec2 Vec2::operator-(const Vec2& vector2) const
 {
 	return { x - vector2.x, y - vector2.y };
 }
 
-int Vector2::MagnitudeSquared()
+int Vec2::MagnitudeSquared()
 {
 	return std::sqrt(pow(x,2) + pow(y,2));
 }
 
-std::string Vector2::ToString()
+std::string Vec2::ToString()
 {
 	return "x : " + std::to_string(x) + ", y : " + std::to_string(y);
 }

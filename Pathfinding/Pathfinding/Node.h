@@ -10,10 +10,10 @@ enum class HEURISTIC
 
 struct Node
 {
-    Vector2 position;
+    Vec2 position;
     int g, h, f;
     Node* pParent;
-    Node(Vector2 _position = Vector2());
+    Node(Vec2 _position = Vec2());
     ~Node();
 
     int GetDistance(Node* from, HEURISTIC heuristic);

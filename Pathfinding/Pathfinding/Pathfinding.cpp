@@ -8,6 +8,7 @@
 
 #define inf std::numeric_limits<int>::max()
 
+#include <raylib.h>
 
 struct Result
 {
@@ -96,10 +97,26 @@ int main()
 
     //Result result = DikjstraOneToAll('a', graph);
     
-    AStar algo(7, 7, 10, HEURISTIC::EUCLIDIAN);
+    int gridWidth = 7;
+    int gridHeight = 7;
+    int step = 100;
+    AStar algo(gridWidth, gridHeight, step, HEURISTIC::MANHATTAN);
 
-    std::vector<Node*> path = algo.Execute({10, 10}, {50, 50});
+    std::vector<Node*> path = algo.Execute({100, 100}, {500, 500});
     AStar::Print(path);
+
+    InitWindow(gridWidth * step, gridHeight * step, "A* test");
+    SetTargetFPS(60);
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(DARKGREEN);
+        algo.DisplayGrid();
+        algo.DisplayPath(path);
+        EndDrawing();
+    }
+
+    CloseWindow();
 
     return 0;
 }

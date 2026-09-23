@@ -11,7 +11,7 @@ enum class HEURISTIC
 struct Node
 {
     Vec2 position;
-    int g, h, f;
+    int g, h, f, weight;
     Node* pParent;
     Node(Vec2 _position = Vec2());
     ~Node();

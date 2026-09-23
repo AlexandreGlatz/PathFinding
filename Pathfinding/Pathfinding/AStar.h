@@ -5,6 +5,7 @@
 
 struct Vec2;
 struct Node;
+struct Color;
 class AStar
 {
 public:
@@ -15,6 +16,7 @@ public:
 	static void Print(std::vector<Node*> pPath);
 	void DisplayGrid();
 	void DisplayPath(std::vector<Node*> pPath);
+	void DisplayObjectives(Vec2 const& origin, Vec2 const& goal);
 
 private:
 	Node* GetMinNode(std::vector<Node*> nodeList);
@@ -30,6 +32,8 @@ private:
 	int m_step;
 	int m_width;
 	int m_height;
+
+	std::vector<Color*> m_weightColors;
 
 	HEURISTIC m_heuristic;
 };

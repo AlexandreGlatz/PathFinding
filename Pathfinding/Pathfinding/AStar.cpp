@@ -9,6 +9,7 @@
 AStar::AStar(int gridWidth, int gridHeight, int step, HEURISTIC heuristic) : m_step(step), m_width(gridWidth), m_height(gridHeight), m_heuristic(heuristic)
 {
 	GenerateNodeGrid(gridWidth, gridHeight, step);
+	m_weightColors = {new Color(GREEN), new Color(BROWN), new Color(YELLOW)};
 }
 
 AStar::~AStar()
@@ -46,7 +47,7 @@ std::vector<Node*> AStar::Execute(Vec2 const& origin, Vec2 const& goal)
 
 			int h = pEndNode->GetDistance(pChild, m_heuristic);
 			int g = pCurrentNode->g + pCurrentNode->GetDistance(pChild, m_heuristic);
-			int f = g + h;
+			int f = (g + h) * pChild->weight;
 
 			if (pChild->pParent != nullptr && pChild->f < f)
 				continue;
@@ -88,6 +89,10 @@ void AStar::DisplayGrid()
 			{
 				color = BLACK;
 			}
+			else
+			{
+				color = *m_weightColors[m_nodeGrid[i][j]->weight - 1];
+			}
 			DrawRectangle(i * m_step, j * m_step, m_step, m_step, color);
 			DrawRectangleLines(i * m_step, j * m_step, m_step, m_step, BLACK);
 		}
@@ -98,8 +103,15 @@ void AStar::DisplayPath(std::vector<Node*> path)
 {
 	for (Node const* pNode : path)
 	{
-		DrawRectangle(pNode->position.x, pNode->position.y, m_step, m_step, GREEN);
+		float radius = m_step / 4.0f;
+		DrawCircle(pNode->position.x + m_step / 2, pNode->position.y + m_step / 2, radius, RED);
 	}
+}
+
+void AStar::DisplayObjectives(Vec2 const& origin, Vec2 const& goal)
+{
+	DrawText("Start", origin.x, origin.y, 30, WHITE);
+	DrawText("Goal", goal.x, goal.y, 30, WHITE);
 }
 
 Node* AStar::GetMinNode(std::vector<Node*> nodeList)
@@ -192,5 +204,10 @@ void AStar::GenerateNodeGrid(int width, int height, int step)
 	m_nodeGrid[5][4] = nullptr;
 	m_nodeGrid[6][4] = nullptr;
 
+	m_nodeGrid[2][2]->weight = 3;
+	m_nodeGrid[1][2]->weight = 2;
+	m_nodeGrid[3][2]->weight = 2;
+	m_nodeGrid[0][2]->weight = 2;
+	m_nodeGrid[3][3]->weight = 2;
 
 }

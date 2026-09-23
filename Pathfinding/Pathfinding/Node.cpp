@@ -2,7 +2,7 @@
 #include <cmath>
 
 
-Node::Node(Vec2 _position) : f(0), g(0), h(0), pParent(nullptr)
+Node::Node(Vec2 _position) : f(0), g(0), h(0), weight(1), pParent(nullptr)
 {
 	position = _position;
 }

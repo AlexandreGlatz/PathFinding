@@ -113,6 +113,7 @@ int main()
         ClearBackground(DARKGREEN);
         algo.DisplayGrid();
         algo.DisplayPath(path);
+        algo.DisplayObjectives({ 100, 100 }, { 500, 500 });
         EndDrawing();
     }
 

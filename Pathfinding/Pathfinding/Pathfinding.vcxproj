@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
+    <ClCompile Include="GridRenderer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PathfindingAlgorithm.cpp" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Dijkstra.h" />
+    <ClInclude Include="GridRenderer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PathfindingAlgorithm.h" />
     <ClInclude Include="Vector2.h" />

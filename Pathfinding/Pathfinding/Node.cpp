@@ -2,14 +2,14 @@
 #include <cmath>
 
 
-Node::Node(Vec2 _position) : f(0), g(0), h(0), weight(1), pParent(nullptr)
+Node::Node(Vec2 _position) : f(0), g(0), h(0), weight(1), pPredecessor(nullptr)
 {
 	position = _position;
 }
 
 Node::~Node()
 {
-	pParent = nullptr;
+	pPredecessor = nullptr;
 }
 
 int Node::GetDistance(Node* from, HEURISTIC heuristic)

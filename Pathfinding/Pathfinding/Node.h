@@ -12,7 +12,7 @@ struct Node
 {
     Vec2 position;
     int g, h, f, weight;
-    Node* pParent;
+    Node* pPredecessor;
     Node(Vec2 _position = Vec2());
     ~Node();
 

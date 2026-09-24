@@ -1,9 +1,13 @@
-#ifndef DIJKSTRA_H_
-#define DIJKSTRA_H_
+#pragma once
 
-class Dijkstra
+#include "PathfindingAlgorithm.h"
+
+class Dijkstra : public PathfindingAlgorithm
 {
+public:
+	Dijkstra(int gridWidth, int gridHeight);
+	~Dijkstra();
+
+	void Execute() override;
+
 };
-
-#endif
-

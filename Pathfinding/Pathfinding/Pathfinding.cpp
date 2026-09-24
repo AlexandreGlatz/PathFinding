@@ -1,7 +1,9 @@
 // Pathfinding.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include "Node.h"
+#include "PathfindingAlgorithm.h"
 #include "AStar.h"
+
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -103,7 +105,7 @@ int main()
     int windowHeight = 900;
     int step = windowWidth / gridWidth;
 
-    AStar algo(gridWidth, gridHeight, step, HEURISTIC::MANHATTAN);
+    PathfindingAlgorithm* pAlgorithm = new AStar();
 
     //std::vector<Node*> path = algo.Execute({1 * step, 1 * step}, {15 * step, 10 * step});
     //AStar::Print(path);
@@ -114,7 +116,6 @@ int main()
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(DARKGREEN);
-        algo.Update();
         EndDrawing();
     }
 

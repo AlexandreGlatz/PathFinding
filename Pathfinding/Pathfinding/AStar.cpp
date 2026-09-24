@@ -6,20 +6,47 @@
 
 #define inf std::numeric_limits<int>::max()
 
-AStar::AStar(int gridWidth, int gridHeight, int step, HEURISTIC heuristic) : m_step(step), m_width(gridWidth), m_height(gridHeight), m_heuristic(heuristic)
+AStar::AStar(int gridWidth, int gridHeight, int step, HEURISTIC heuristic) :
+	m_step(step),
+	m_width(gridWidth),
+	m_height(gridHeight),
+	m_heuristic(heuristic),
+	m_startPosition({ 0,0 }),
+	m_endPosition({1 * step, 0})
+
 {
 	GenerateNodeGrid(gridWidth, gridHeight, step);
-	m_weightColors = {new Color(GREEN), new Color(BROWN), new Color(YELLOW)};
+	m_weightColors = {new Color(DARKGREEN), new Color(DARKBROWN), new Color(YELLOW)};
 }
 
 AStar::~AStar()
 {
 }
 
-std::vector<Node*> AStar::Execute(Vec2 const& origin, Vec2 const& goal)
+void AStar::SetHeuristic(HEURISTIC heuristic)
 {
-	Node* pStartNode = m_nodeGrid[origin.x / m_step][origin.y / m_step];
-	Node* pEndNode = m_nodeGrid[goal.x / m_step][goal.y / m_step];
+	m_heuristic = heuristic;
+}
+
+void AStar::SetStartPosition(Vec2 const& position)
+{
+	m_startPosition = position;
+}
+
+void AStar::SetEndPosition(Vec2 const& position)
+{
+	m_endPosition = position;
+}
+
+std::vector<Node*> AStar::Execute()
+{
+	m_finalPath.clear();
+	m_openNodes.clear();
+	m_closedNodes.clear();
+	ClearParents();
+
+	Node* pStartNode = m_nodeGrid[m_startPosition.x / m_step][m_startPosition.y / m_step];
+	Node* pEndNode = m_nodeGrid[m_endPosition.x / m_step][m_endPosition.y / m_step];
 	pStartNode->f = 0;
 
 	m_openNodes.push_back(pStartNode);
@@ -30,11 +57,11 @@ std::vector<Node*> AStar::Execute(Vec2 const& origin, Vec2 const& goal)
 		m_openNodes.erase(std::remove(m_openNodes.begin(), m_openNodes.end(), pCurrentNode), m_openNodes.end());
 		m_closedNodes.push_back(pCurrentNode);
 
-		if (pCurrentNode->position == goal)
+		if (pCurrentNode->position == m_endPosition)
 		{
-			std::vector<Node*> path = GetPath(pCurrentNode);
-			path.push_back(pStartNode);
-			return path;
+			m_finalPath = GetPath(pCurrentNode);
+			m_finalPath.push_back(pStartNode);
+			return m_finalPath;
 		}
 		
 		std::vector<Node*> children = InitChildren(pCurrentNode);
@@ -70,9 +97,9 @@ std::vector<Node*> AStar::Execute(Vec2 const& origin, Vec2 const& goal)
 	}
 }
 
-void AStar::Print(std::vector<Node*> pPath)
+void AStar::Print()
 {
-	for (Node* pNode : pPath)
+	for (Node* pNode : m_finalPath)
 	{
 		std::cout << pNode->position.ToString() << std::endl;
 	}
@@ -85,7 +112,7 @@ void AStar::DisplayGrid()
 		for (int j = 0; j<m_height; ++j)
 		{
 			Color color = WHITE;
-			if (m_nodeGrid[i][j] == nullptr)
+			if (m_nodeGrid[i][j]->weight == 0)
 			{
 				color = BLACK;
 			}
@@ -99,19 +126,64 @@ void AStar::DisplayGrid()
 	}
 }
 
-void AStar::DisplayPath(std::vector<Node*> path)
+void AStar::DisplayPath()
 {
-	for (Node const* pNode : path)
+	for (Node const* pNode : m_finalPath)
 	{
 		float radius = m_step / 4.0f;
 		DrawCircle(pNode->position.x + m_step / 2, pNode->position.y + m_step / 2, radius, RED);
 	}
 }
 
-void AStar::DisplayObjectives(Vec2 const& origin, Vec2 const& goal)
+void AStar::DisplayObjectives()
 {
-	DrawText("Start", origin.x, origin.y, 30, WHITE);
-	DrawText("Goal", goal.x, goal.y, 30, WHITE);
+	DrawText("Start", m_startPosition.x, m_startPosition.y, 0.25 * m_step, WHITE);
+	DrawText("Goal", m_endPosition.x, m_endPosition.y, 0.25 * m_step, WHITE);
+}
+
+void AStar::SwitchWeightAt(int mouseX, int mouseY)
+{
+	Node* pNode = m_nodeGrid[mouseX / m_step][mouseY / m_step];
+	pNode->weight = (pNode->weight + 1) % 4;
+}
+
+void AStar::ClearParents()
+{
+	for (std::vector<Node*> nodes : m_nodeGrid)
+	{
+		for (Node* pNode : nodes)
+		{
+			pNode->pParent = nullptr;
+		}
+	}
+}
+
+void AStar::Update()
+{
+	DisplayGrid();
+	DisplayPath();
+	DisplayObjectives();
+
+	if (IsKeyPressed(KEY_S))
+	{
+		Vector2 mousePos = GetMousePosition();
+		SetStartPosition({ static_cast<int>(mousePos.x) / m_step * m_step, static_cast<int>(mousePos.y) / m_step * m_step });
+	}
+
+	if (IsKeyPressed(KEY_G))
+	{
+		Vector2 mousePos = GetMousePosition();
+		SetEndPosition({ static_cast<int>(mousePos.x) / m_step * m_step, static_cast<int>(mousePos.y) / m_step  * m_step});
+	}
+
+	if (IsKeyPressed(KEY_X))
+		Execute();
+
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	{
+		Vector2 mousePos = GetMousePosition();
+		SwitchWeightAt(mousePos.x, mousePos.y);
+	}
 }
 
 Node* AStar::GetMinNode(std::vector<Node*> nodeList)
@@ -156,7 +228,7 @@ std::vector<Node*> AStar::InitChildren(Node* pCurrentNode)
 			if (widthPos < 0 || widthPos >= m_width || heightPos < 0 || heightPos >= m_height)
 				continue;
 
-			if (m_nodeGrid[widthPos][heightPos] == nullptr)
+			if (m_nodeGrid[widthPos][heightPos]->weight == 0)
 				continue;
 
 			if (i == 0 && j == 0)
@@ -197,17 +269,4 @@ void AStar::GenerateNodeGrid(int width, int height, int step)
 			m_nodeGrid[i][j] = new Node({ i * step, j * step });
 		}
 	}
-
-	m_nodeGrid[3][5] = nullptr;
-	m_nodeGrid[3][4] = nullptr;
-	m_nodeGrid[4][4] = nullptr;
-	m_nodeGrid[5][4] = nullptr;
-	m_nodeGrid[6][4] = nullptr;
-
-	m_nodeGrid[2][2]->weight = 3;
-	m_nodeGrid[1][2]->weight = 2;
-	m_nodeGrid[3][2]->weight = 2;
-	m_nodeGrid[0][2]->weight = 2;
-	m_nodeGrid[3][3]->weight = 2;
-
 }

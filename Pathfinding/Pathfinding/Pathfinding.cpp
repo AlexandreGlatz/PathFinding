@@ -97,23 +97,24 @@ int main()
 
     //Result result = DikjstraOneToAll('a', graph);
     
-    int gridWidth = 7;
-    int gridHeight = 7;
-    int step = 100;
+    int gridWidth = 20;
+    int gridHeight = 20;
+    int windowWidth = 900;
+    int windowHeight = 900;
+    int step = windowWidth / gridWidth;
+
     AStar algo(gridWidth, gridHeight, step, HEURISTIC::MANHATTAN);
 
-    std::vector<Node*> path = algo.Execute({100, 100}, {500, 500});
-    AStar::Print(path);
+    //std::vector<Node*> path = algo.Execute({1 * step, 1 * step}, {15 * step, 10 * step});
+    //AStar::Print(path);
 
-    InitWindow(gridWidth * step, gridHeight * step, "A* test");
+    InitWindow(windowWidth, windowHeight, "A* test");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(DARKGREEN);
-        algo.DisplayGrid();
-        algo.DisplayPath(path);
-        algo.DisplayObjectives({ 100, 100 }, { 500, 500 });
+        algo.Update();
         EndDrawing();
     }
 

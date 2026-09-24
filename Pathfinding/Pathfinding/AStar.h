@@ -12,11 +12,20 @@ public:
 	AStar(int gridWidth, int gridHeight, int step, HEURISTIC heuristic = HEURISTIC::MANHATTAN);
 	~AStar();
 
-	std::vector<Node*> Execute(Vec2 const& origin, Vec2 const& goal);
-	static void Print(std::vector<Node*> pPath);
+	void SetHeuristic(HEURISTIC heuristic);
+
+	void SetStartPosition(Vec2 const& position);
+	void SetEndPosition(Vec2 const& position);
+
+	std::vector<Node*> Execute();
+	void Print();
 	void DisplayGrid();
-	void DisplayPath(std::vector<Node*> pPath);
-	void DisplayObjectives(Vec2 const& origin, Vec2 const& goal);
+	void DisplayPath();
+	void DisplayObjectives();
+	void SwitchWeightAt(int mouseX, int mouseY);
+	void ClearParents();
+
+	void Update();
 
 private:
 	Node* GetMinNode(std::vector<Node*> nodeList);
@@ -36,5 +45,10 @@ private:
 	std::vector<Color*> m_weightColors;
 
 	HEURISTIC m_heuristic;
+
+	Vec2 m_startPosition;
+	Vec2 m_endPosition;
+
+	std::vector<Node*> m_finalPath;
 };
 

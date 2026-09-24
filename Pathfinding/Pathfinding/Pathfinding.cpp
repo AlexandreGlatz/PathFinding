@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "PathfindingAlgorithm.h"
 #include "AStar.h"
+#include "GridRenderer.h"
 
 #include <iostream>
 #include <limits>
@@ -106,6 +107,9 @@ int main()
     int step = windowWidth / gridWidth;
 
     PathfindingAlgorithm* pAlgorithm = new AStar();
+    pAlgorithm->InitGrid(gridWidth, gridHeight, step);
+
+    GridRenderer renderer(pAlgorithm);
 
     //std::vector<Node*> path = algo.Execute({1 * step, 1 * step}, {15 * step, 10 * step});
     //AStar::Print(path);
@@ -116,6 +120,7 @@ int main()
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(DARKGREEN);
+        renderer.Update();
         EndDrawing();
     }
 

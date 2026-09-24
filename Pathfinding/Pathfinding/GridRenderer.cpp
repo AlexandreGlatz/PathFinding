@@ -3,8 +3,9 @@
 
 #include <raylib.h>
 
-GridRenderer::GridRenderer(PathfindingAlgorithm& algorithm): m_pAlgorithm(&algorithm)
+GridRenderer::GridRenderer(PathfindingAlgorithm* pAlgorithm): m_pAlgorithm(pAlgorithm)
 {
+	m_weightColors = { new Color(DARKGREEN), new Color(BROWN), new Color(YELLOW) };
 }
 
 GridRenderer::~GridRenderer()
@@ -36,7 +37,7 @@ void GridRenderer::Update()
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		Vector2 mousePos = GetMousePosition();
-		m_pAlgorithm->SwitchWeightAtIndex(static_cast<int>(mousePos.x), static_cast<int>(mousePos.y));
+		m_pAlgorithm->SwitchWeightAtIndex(static_cast<int>(mousePos.x) / step, static_cast<int>(mousePos.y) / step);
 	}
 
 }

@@ -9,7 +9,7 @@ struct Vec2;
 class GridRenderer
 {
 public:
-	GridRenderer(PathfindingAlgorithm& algorithm);
+	GridRenderer(PathfindingAlgorithm* pAlgorithm);
 	~GridRenderer();
 
 	void Update();

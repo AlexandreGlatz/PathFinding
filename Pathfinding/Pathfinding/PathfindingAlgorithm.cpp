@@ -68,6 +68,10 @@ void PathfindingAlgorithm::SwitchWeightAtIndex(int i, int j)
 
 void PathfindingAlgorithm::InitGrid(int gridWidth, int gridHeight, int step)
 {
+	m_width = gridWidth;
+	m_height = gridHeight;
+	m_step = step;
+
 	m_nodeGrid.resize(gridWidth);
 	for (int i = 0; i < gridWidth; ++i)
 	{

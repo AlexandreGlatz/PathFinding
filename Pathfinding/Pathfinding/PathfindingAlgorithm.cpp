@@ -59,6 +59,19 @@ void PathfindingAlgorithm::ClearPredecessors()
 	}
 }
 
+std::vector<Node*> PathfindingAlgorithm::FetchPath(Node* pCurrentNode)
+{
+	Node* pNode = pCurrentNode;
+	std::vector<Node*> path;
+	while (pNode->pPredecessor != nullptr)
+	{
+		path.push_back(pNode);
+		pNode = pNode->pPredecessor;
+	}
+
+	return path;
+}
+
 void PathfindingAlgorithm::SwitchWeightAtIndex(int i, int j)
 {
 	Node* pNode = m_nodeGrid[i][j];

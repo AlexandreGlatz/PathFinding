@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "PathfindingAlgorithm.h"
 #include "AStar.h"
+#include "Dijkstra.h"
 #include "GridRenderer.h"
 
 #include <iostream>
@@ -100,21 +101,18 @@ int main()
 
     //Result result = DikjstraOneToAll('a', graph);
     
-    int gridWidth = 20;
-    int gridHeight = 20;
-    int windowWidth = 900;
-    int windowHeight = 900;
+    int gridWidth = 7;
+    int gridHeight = 7;
+    int windowWidth = 1000;
+    int windowHeight = 1000;
     int step = windowWidth / gridWidth;
 
-    PathfindingAlgorithm* pAlgorithm = new AStar();
+    PathfindingAlgorithm* pAlgorithm = new Dijkstra();
     pAlgorithm->InitGrid(gridWidth, gridHeight, step);
 
     GridRenderer renderer(pAlgorithm);
 
-    //std::vector<Node*> path = algo.Execute({1 * step, 1 * step}, {15 * step, 10 * step});
-    //AStar::Print(path);
-
-    InitWindow(windowWidth, windowHeight, "A* test");
+    InitWindow(windowWidth, windowHeight, "Pathfinding test");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {

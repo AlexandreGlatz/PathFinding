@@ -145,16 +145,3 @@ std::vector<Node*> AStar::InitChildren(Node* pCurrentNode)
 
 	return children;
 }
-
-std::vector<Node*> AStar::FetchPath(Node* pCurrentNode)
-{
-	Node* pNode = pCurrentNode;
-	std::vector<Node*> path;
-	while (pNode->pPredecessor != nullptr)
-	{
-		path.push_back(pNode);
-		pNode = pNode->pPredecessor;
-	}
-
-	return path;
-}

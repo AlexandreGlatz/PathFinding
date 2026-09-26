@@ -19,11 +19,8 @@ public:
 private:
 	Node* GetMinNode(std::vector<Node*> nodeList);
 	std::vector<Node*> InitChildren(Node* pCurrentNode);
-	std::vector<Node*> FetchPath(Node* pCurrentNode);
 
 private:
-	std::vector<Node*> m_openNodes;
-	std::vector<Node*> m_closedNodes;
 
 	HEURISTIC m_heuristic;
 };

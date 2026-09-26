@@ -34,10 +34,14 @@ public:
 
 protected:
 	void ClearPredecessors();
+	std::vector<Node*> FetchPath(Node* pCurrentNode);
 
 protected:
 	std::vector<std::vector<Node*>> m_nodeGrid;
 	std::vector<Node*> m_finalPath;
+
+	std::vector<Node*> m_openNodes;
+	std::vector<Node*> m_closedNodes;
 
 	Vec2 m_startPosition;
 	Vec2 m_endPosition;

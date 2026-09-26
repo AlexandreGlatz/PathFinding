@@ -10,9 +10,12 @@ public:
 
 	void Execute() override;
 
+	void SetStartPosition(Vec2 const& position) override;
+
 private:
 	Node* GetMinNode(std::vector<Node*> nodes);
 	void OneToAll(Node* pStartNode);
 
 private:
+	bool m_hasStartChanged;
 };

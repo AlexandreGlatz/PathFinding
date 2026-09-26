@@ -23,7 +23,7 @@ public:
 
 	void SwitchWeightAtIndex(int i, int j);
 
-	void SetStartPosition(Vec2 const& position);
+	virtual void SetStartPosition(Vec2 const& position);
 	void SetEndPosition(Vec2 const& position);
 
 	int GetStep();

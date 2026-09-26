@@ -2,7 +2,9 @@
 
 #define inf std::numeric_limits<int>::max()
 
-Dijkstra::Dijkstra() : PathfindingAlgorithm(ALGORITHM::DIJKSTRA)
+Dijkstra::Dijkstra() : 
+    PathfindingAlgorithm(ALGORITHM::DIJKSTRA),
+    m_hasStartChanged(true)
 {
 }
 
@@ -12,20 +14,31 @@ Dijkstra::~Dijkstra()
 
 void Dijkstra::Execute()
 {
-    m_finalPath.clear();
-    m_openNodes.clear();
-    m_closedNodes.clear();
-    ClearPredecessors();
     int gridSize = m_width * m_height;
     //m_openNodes.resize(gridSize);
 
 	Node* pStartNode = m_nodeGrid[m_startPosition.x / m_step][m_startPosition.y / m_step];
-    OneToAll(pStartNode);
+    if (m_hasStartChanged)
+    {
+        m_finalPath.clear();
+        m_openNodes.clear();
+        m_closedNodes.clear();
+        ClearPredecessors();
+
+        OneToAll(pStartNode);
+        m_hasStartChanged = false;
+    }
 
 	Node* pEndNode = m_nodeGrid[m_endPosition.x / m_step][m_endPosition.y / m_step];
 
     m_finalPath = FetchPath(pEndNode);
     m_finalPath.push_back(pStartNode);
+}
+
+void Dijkstra::SetStartPosition(Vec2 const& position)
+{
+    PathfindingAlgorithm::SetStartPosition(position);
+    m_hasStartChanged = true;
 }
 
 Node* Dijkstra::GetMinNode(std::vector<Node*> nodes)

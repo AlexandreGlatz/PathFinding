@@ -12,6 +12,10 @@ Dijkstra::~Dijkstra()
 
 void Dijkstra::Execute()
 {
+    m_finalPath.clear();
+    m_openNodes.clear();
+    m_closedNodes.clear();
+    ClearPredecessors();
     int gridSize = m_width * m_height;
     //m_openNodes.resize(gridSize);
 
@@ -62,12 +66,15 @@ void Dijkstra::OneToAll(Node* pStartNode)
 
         for (int i = 0; i < m_openNodes.size(); ++i)
         {
-            int diffX = m_openNodes[i]->position.x / m_step % m_width - pCurrentNode->position.x / m_step;
-            int diffY = m_openNodes[i]->position.y / m_step % m_height - pCurrentNode->position.y / m_step;
+            int diffX = std::abs(m_openNodes[i]->position.x / m_step % m_width - pCurrentNode->position.x / m_step);
+            int diffY = std::abs(m_openNodes[i]->position.y / m_step % m_height - pCurrentNode->position.y / m_step);
             if (m_openNodes[i]->weight == inf || (diffX > 1 || diffY > 1))
                 continue;
 
-            int temp = pCurrentNode->f + m_openNodes[i]->weight;
+            int diagonal = 0;
+            if (diffX == diffY)
+                diagonal = 1;
+            int temp = pCurrentNode->f + m_openNodes[i]->weight + diagonal;
             
             if (temp < m_openNodes[i]->f)
             {

@@ -21,7 +21,7 @@ public:
 
 	virtual void Execute() = 0;
 
-	void SwitchWeightAtIndex(int i, int j);
+	virtual void SwitchWeightAtIndex(int i, int j);
 
 	virtual void SetStartPosition(Vec2 const& position);
 	void SetEndPosition(Vec2 const& position);

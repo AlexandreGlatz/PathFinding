@@ -95,8 +95,8 @@ void GridRenderer::DisplayTutorial()
 	DrawText("S -> Set Start", 20, m_gridHeight + 20, 20, WHITE);
 	DrawText("G -> Set Goal", 20, m_gridHeight + 40, 20, WHITE);
 	DrawText("X -> Execute Algorithm & display path", 20, m_gridHeight + 60, 20, WHITE);
-	std::string timeString = "Time to execute" + m_secondsTimer;
-	DrawText(timeString.c_str(), 20, m_gridHeight + 80, 20, WHITE);
+	std::string timeString = "Time to execute : " + m_secondsTimer;
+	DrawText(timeString.c_str(), 20, m_gridHeight + 100, 20, WHITE);
 	
 }
 

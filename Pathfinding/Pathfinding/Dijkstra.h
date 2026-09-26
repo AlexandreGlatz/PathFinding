@@ -11,11 +11,12 @@ public:
 	void Execute() override;
 
 	void SetStartPosition(Vec2 const& position) override;
+	void SwitchWeightAtIndex(int i, int j) override;
 
 private:
 	Node* GetMinNode(std::vector<Node*> nodes);
 	void OneToAll(Node* pStartNode);
 
 private:
-	bool m_hasStartChanged;
+	bool m_hasPathChanged;
 };

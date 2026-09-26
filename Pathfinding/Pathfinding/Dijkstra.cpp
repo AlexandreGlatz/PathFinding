@@ -4,7 +4,7 @@
 
 Dijkstra::Dijkstra() : 
     PathfindingAlgorithm(ALGORITHM::DIJKSTRA),
-    m_hasStartChanged(true)
+    m_hasPathChanged(true)
 {
 }
 
@@ -18,7 +18,7 @@ void Dijkstra::Execute()
     //m_openNodes.resize(gridSize);
 
 	Node* pStartNode = m_nodeGrid[m_startPosition.x / m_step][m_startPosition.y / m_step];
-    if (m_hasStartChanged)
+    if (m_hasPathChanged)
     {
         m_finalPath.clear();
         m_openNodes.clear();
@@ -26,7 +26,7 @@ void Dijkstra::Execute()
         ClearPredecessors();
 
         OneToAll(pStartNode);
-        m_hasStartChanged = false;
+        m_hasPathChanged = false;
     }
 
 	Node* pEndNode = m_nodeGrid[m_endPosition.x / m_step][m_endPosition.y / m_step];
@@ -38,7 +38,13 @@ void Dijkstra::Execute()
 void Dijkstra::SetStartPosition(Vec2 const& position)
 {
     PathfindingAlgorithm::SetStartPosition(position);
-    m_hasStartChanged = true;
+    m_hasPathChanged = true;
+}
+
+void Dijkstra::SwitchWeightAtIndex(int i, int j)
+{
+    PathfindingAlgorithm::SwitchWeightAtIndex(i, j);
+    m_hasPathChanged = true;
 }
 
 Node* Dijkstra::GetMinNode(std::vector<Node*> nodes)

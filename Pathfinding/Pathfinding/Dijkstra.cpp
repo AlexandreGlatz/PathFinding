@@ -54,7 +54,7 @@ Node* Dijkstra::GetMinNode(std::vector<Node*> nodes)
 
 	for (Node* pNode : nodes)
 	{
-		if (pNode->f < minFValue)
+		if (pNode->f <= minFValue)
 		{
 			minFValue = pNode->f;
 			pResultNode = pNode;
@@ -87,7 +87,7 @@ void Dijkstra::OneToAll(Node* pStartNode)
         {
             int diffX = std::abs(m_openNodes[i]->position.x / m_step % m_width - pCurrentNode->position.x / m_step);
             int diffY = std::abs(m_openNodes[i]->position.y / m_step % m_height - pCurrentNode->position.y / m_step);
-            if (m_openNodes[i]->weight == inf || (diffX > 1 || diffY > 1))
+            if (m_openNodes[i]->weight == 0 || (diffX > 1 || diffY > 1))
                 continue;
 
             int diagonal = 0;

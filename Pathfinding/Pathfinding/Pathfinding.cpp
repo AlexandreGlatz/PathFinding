@@ -9,21 +9,10 @@
 
 int main()
 {
-    /*std::vector<std::vector<int>> graph{
-    {0, 10, 15, inf, 30, inf, inf},
-    {inf, 0, inf, inf, inf, 57, inf},
-    {15, inf, 0, 16, inf, inf, 52},
-    {inf, inf, 13, 0, inf, inf, inf},
-    {30, inf, inf, inf, 0, 11, 34},
-    {inf, 49, inf, inf, 12, 0, inf},
-    {inf, inf, 63, inf, 35, inf, 0 } };*/
-
-    //Result result = DikjstraOneToAll('a', graph);
-    
     int gridWidth = 100;
     int gridHeight = 100;
-    int windowWidth = 1000;
-    int windowHeight = 1000;
+    int windowWidth = 800;
+    int windowHeight = 800;
     int step = windowWidth / gridWidth;
 
     PathfindingAlgorithm* pAlgorithm = new Dijkstra();
@@ -31,7 +20,7 @@ int main()
 
     GridRenderer renderer(pAlgorithm);
 
-    InitWindow(windowWidth, windowHeight, "Pathfinding test");
+    InitWindow(windowWidth, windowHeight + 200, "Pathfinding test");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {

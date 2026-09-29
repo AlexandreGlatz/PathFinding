@@ -1,26 +1,26 @@
 # PathFinding
-Editor to visualise pathfinding algorithms on a 2D grid. Contains A* and Dijkstra Algorithm.
-Dijkstra does a OneToAll when executing for the first time and will keep all the paths unless the start or the terrain is changed.
-A* is the unsual A* algorithm.
+Editor to visualise pathfinding algorithms on a 2D grid. Contains A* and Dijkstra Algorithm.<br/>
+Dijkstra does a OneToAll when executing for the first time and will keep all the paths unless the start or the terrain is changed.<br/>
+A* is the unsual A* algorithm.<br/>
 
 ## Launching
-You can launch the application by pressing the green arrrow on Visual Studio
-There is also an executable in the Pathfinding/Binaries/ folder
+You can launch the application by pressing the green arrrow on Visual Studio<br/>
+There is also an executable in the Pathfinding/Binaries/ folder<br/>
 
 ## Inputs
-S -> Set start point on the grid
-G -> Set goal point on the grid
-X -> Execute algorithm and display path
-R -> Switch algorithm (functional but each algortihm has it's own grid)
-MOUSE LEFT CLICK -> change weight on the grid
+S -> Set start point on the grid<br/>
+G -> Set goal point on the grid<br/>
+X -> Execute algorithm and display path<br/>
+R -> Switch algorithm (functional but each algortihm has it's own grid)<br/>
+MOUSE LEFT CLICK -> change weight on the grid<br/>
 
-There is a reminder of these in the application
+There is a reminder of these in the application<br/>
 
 ## Colors
-Green -> Easy path (weight of 1)
-Brown -> Challenging path (weight of 2)
-Yellow -> Difficult path (weight of 3)
-Black -> Wall (Cannot go through)
+Green -> Easy path (weight of 1)<br/>
+Brown -> Challenging path (weight of 2)<br/>
+Yellow -> Difficult path (weight of 3)<br/>
+Black -> Wall (Cannot go through)<br/>
 
 ## Known issues and improvements
  - Switching algorithms should work with the same grid

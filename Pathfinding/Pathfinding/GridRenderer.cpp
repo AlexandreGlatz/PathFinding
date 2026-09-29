@@ -1,11 +1,23 @@
 #include "GridRenderer.h"
-#include "PathfindingAlgorithm.h"
+#include "Dijkstra.h"
+#include "AStar.h"
 
 #include <raylib.h>
 
-GridRenderer::GridRenderer(PathfindingAlgorithm* pAlgorithm): m_pAlgorithm(pAlgorithm)
+GridRenderer::GridRenderer(PathfindingAlgorithm* pAlgorithm):
+	m_gridHeight(0),
+	m_gridWidth(0),
+	m_algorithmIndex(0)
 {
 	m_weightColors = { new Color(DARKGREEN), new Color(BROWN), new Color(YELLOW) };
+	m_algorithms.push_back(new Dijkstra());
+	m_algorithms.push_back(new AStar());
+
+	for (PathfindingAlgorithm* pAlgo : m_algorithms)
+		pAlgo->InitGrid(pAlgorithm->GetNodeGrid().size(), pAlgorithm->GetNodeGrid()[0].size(), pAlgorithm->GetStep());
+
+	m_algorithmIndex = static_cast<int>(pAlgorithm->GetType());
+	m_pAlgorithm = pAlgorithm;
 }
 
 GridRenderer::~GridRenderer()
@@ -40,12 +52,24 @@ void GridRenderer::Update()
 		m_secondsTimer = std::to_string(currentTimer);
 	}
 
+	if (IsKeyPressed(KEY_R))
+	{
+		SwitchAlgorithm();
+	}
+
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		Vector2 mousePos = GetMousePosition();
 		m_pAlgorithm->SwitchWeightAtIndex(static_cast<int>(mousePos.x) / step, static_cast<int>(mousePos.y) / step);
 	}
 
+}
+
+void GridRenderer::SwitchAlgorithm()
+{
+	m_algorithmIndex += 1;
+	m_algorithmIndex %= m_algorithms.size();
+	m_pAlgorithm = m_algorithms[m_algorithmIndex];
 }
 
 void GridRenderer::DisplayGrid(std::vector<std::vector<Node*>> nodeGrid, int step)
@@ -95,9 +119,11 @@ void GridRenderer::DisplayTutorial()
 	DrawText("S -> Set Start", 20, m_gridHeight + 20, 20, WHITE);
 	DrawText("G -> Set Goal", 20, m_gridHeight + 40, 20, WHITE);
 	DrawText("X -> Execute Algorithm & display path", 20, m_gridHeight + 60, 20, WHITE);
+	DrawText("R -> Switch Algorithm", 20, m_gridHeight + 80, 20, WHITE);
 	std::string timeString = "Time to execute : " + m_secondsTimer;
-	DrawText(timeString.c_str(), 20, m_gridHeight + 100, 20, WHITE);
-	
+	DrawText(timeString.c_str(), 20, m_gridHeight + 120, 20, WHITE);
+	std::string currentAlgorithm = "Current Algorithm : " + m_algorithms[m_algorithmIndex]->GetTypeStr();
+	DrawText(currentAlgorithm.c_str(), 20, m_gridHeight + 140, 20, WHITE);
 }
 
 

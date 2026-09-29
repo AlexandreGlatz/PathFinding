@@ -2,7 +2,7 @@
 
 #define inf std::numeric_limits<int>::max()
 
-Dijkstra::Dijkstra() : 
+Dijkstra::Dijkstra() :
     PathfindingAlgorithm(ALGORITHM::DIJKSTRA),
     m_hasPathChanged(true)
 {

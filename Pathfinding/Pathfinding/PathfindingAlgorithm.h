@@ -5,6 +5,7 @@
 
 struct Color;
 struct Vec2;
+
 enum class ALGORITHM
 {
 	DIJKSTRA,
@@ -27,6 +28,9 @@ public:
 	void SetEndPosition(Vec2 const& position);
 
 	int GetStep();
+	std::string GetTypeStr();
+	ALGORITHM GetType();
+
 	Vec2 const& GetStartPosition();
 	Vec2 const& GetEndPosition();
 	std::vector<Node*> GetFinalPath();
@@ -49,5 +53,7 @@ protected:
 	int m_width;
 	int m_height;
 	int m_step;
+
+	ALGORITHM m_type;
 
 };

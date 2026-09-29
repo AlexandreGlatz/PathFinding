@@ -9,13 +9,13 @@
 
 int main()
 {
-    int gridWidth = 20;
-    int gridHeight = 20;
+    int gridWidth = 50;
+    int gridHeight = 50;
     int windowWidth = 800;
     int windowHeight = 800;
     int step = windowWidth / gridWidth;
 
-    PathfindingAlgorithm* pAlgorithm = new Dijkstra();
+    PathfindingAlgorithm* pAlgorithm = new AStar();
     pAlgorithm->InitGrid(gridWidth, gridHeight, step);
 
     GridRenderer renderer(pAlgorithm);

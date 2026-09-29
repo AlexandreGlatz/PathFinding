@@ -3,8 +3,11 @@
 #include <vector>
 #include <chrono>
 #include <string>
+#include <unordered_map>
 	
 class PathfindingAlgorithm;
+class Dijkstra;
+class AStar;
 struct Color;
 struct Node;
 struct Vec2;
@@ -15,6 +18,8 @@ public:
 	~GridRenderer();
 
 	void Update();
+
+	void SwitchAlgorithm();
 
 private:
 	void DisplayGrid(std::vector<std::vector<Node*>> nodeGrid, int step);
@@ -28,8 +33,11 @@ private:
 
 	int m_gridWidth;
 	int m_gridHeight;
+	int m_algorithmIndex;
 
 	std::chrono::time_point<std::chrono::steady_clock> m_beginning;
 	std::string m_secondsTimer;
+
+	std::vector<PathfindingAlgorithm*> m_algorithms;
 };
 

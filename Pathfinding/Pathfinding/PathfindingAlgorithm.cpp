@@ -5,7 +5,8 @@ PathfindingAlgorithm::PathfindingAlgorithm(ALGORITHM algorithm) :
 	m_endPosition({ 0, 0 }),
 	m_height(0),
 	m_width(0),
-	m_step(0)
+	m_step(0),
+	m_type(algorithm)
 {
 }
 
@@ -26,6 +27,24 @@ void PathfindingAlgorithm::SetEndPosition(Vec2 const& position)
 int PathfindingAlgorithm::GetStep()
 {
 	return m_step;
+}
+
+std::string PathfindingAlgorithm::GetTypeStr()
+{
+	switch (m_type)
+	{
+	case ALGORITHM::DIJKSTRA:
+		return "Dijkstra";
+	case ALGORITHM::ASTAR:
+		return "A*";
+	default:
+		break;
+	}
+}
+
+ALGORITHM PathfindingAlgorithm::GetType()
+{
+	return m_type;
 }
 
 Vec2 const& PathfindingAlgorithm::GetStartPosition()

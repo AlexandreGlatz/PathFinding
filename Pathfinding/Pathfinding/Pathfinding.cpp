@@ -9,8 +9,8 @@
 
 int main()
 {
-    int gridWidth = 50;
-    int gridHeight = 50;
+    int gridWidth = 25;
+    int gridHeight = 25;
     int windowWidth = 800;
     int windowHeight = 800;
     int step = windowWidth / gridWidth;

@@ -120,10 +120,12 @@ void GridRenderer::DisplayTutorial()
 	DrawText("G -> Set Goal", 20, m_gridHeight + 40, 20, WHITE);
 	DrawText("X -> Execute Algorithm & display path", 20, m_gridHeight + 60, 20, WHITE);
 	DrawText("R -> Switch Algorithm", 20, m_gridHeight + 80, 20, WHITE);
+	DrawText("MOUSE LEFT CLICK -> change weight", 20, m_gridHeight + 100, 20, WHITE);
+
 	std::string timeString = "Time to execute : " + m_secondsTimer;
-	DrawText(timeString.c_str(), 20, m_gridHeight + 120, 20, WHITE);
+	DrawText(timeString.c_str(), 20, m_gridHeight + 140, 20, WHITE);
 	std::string currentAlgorithm = "Current Algorithm : " + m_algorithms[m_algorithmIndex]->GetTypeStr();
-	DrawText(currentAlgorithm.c_str(), 20, m_gridHeight + 140, 20, WHITE);
+	DrawText(currentAlgorithm.c_str(), 20, m_gridHeight + 160, 20, WHITE);
 }
 
 
